@@ -1,6 +1,7 @@
 
 package br.com.corrida.service;
 
+import br.com.corrida.dto.InscricaoAtualizacaoRequest;
 import br.com.corrida.dto.InscricaoRequest;
 import br.com.corrida.dto.InscricaoResponse;
 import br.com.corrida.model.Categoria;
@@ -142,20 +143,18 @@ class InscricaoServiceTest {
                 Percurso.KM_5
         );
 
-        InscricaoRequest request = new InscricaoRequest();
+        InscricaoAtualizacaoRequest request = new InscricaoAtualizacaoRequest();
         request.setNome("Nome Alterado");
-        request.setEmail("teste@email.com");
+        //request.setEmail("teste@email.com");
         request.setDataNascimento(LocalDate.of(2013, 3, 15));
         request.setPercurso(Percurso.KM_5);
 
         // A atualização deve ser rejeitada porque a pessoa terá 13 anos.
-        assertThrows(IllegalArgumentException.class, () ->
-                service.atualizar("teste@email.com", request)
+        assertThrows(IllegalArgumentException.class, () -> service.atualizar("teste@email.com", request)
         );
 
         // A inscrição original deve continuar intacta.
-        InscricaoResponse original =
-                service.buscarPorEmail("teste@email.com");
+        InscricaoResponse original = service.buscarPorEmail("teste@email.com");
 
         assertEquals("Pessoa Teste", original.getNome());
         assertEquals(LocalDate.of(2000, 5, 20), original.getDataNascimento());

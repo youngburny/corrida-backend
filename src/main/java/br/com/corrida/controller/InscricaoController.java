@@ -1,5 +1,6 @@
 package br.com.corrida.controller;
 
+import br.com.corrida.dto.InscricaoAtualizacaoRequest;
 import br.com.corrida.dto.InscricaoRequest;
 import br.com.corrida.dto.InscricaoResponse;
 import br.com.corrida.dto.ResumoResponse;
@@ -40,7 +41,7 @@ public class InscricaoController {
     @PutMapping("/{email}")
     public ResponseEntity<InscricaoResponse> atualizar(
             @PathVariable String email,
-            @RequestBody InscricaoRequest request
+            @RequestBody InscricaoAtualizacaoRequest request
     ) {
         return ResponseEntity.ok(service.atualizar(email, request));
     }

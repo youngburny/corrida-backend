@@ -2,6 +2,7 @@ package br.com.corrida.service;
 
 import br.com.corrida.exception.InscricaoNaoEncontradaException;
 
+import br.com.corrida.dto.InscricaoAtualizacaoRequest;
 import br.com.corrida.dto.InscricaoRequest;
 import br.com.corrida.dto.InscricaoResponse;
 import br.com.corrida.dto.ResumoResponse;
@@ -143,18 +144,13 @@ public class InscricaoService {
         return converterParaResponse(inscricao);
     }
 
-    public InscricaoResponse atualizar(String email, InscricaoRequest request) {
+    public InscricaoResponse atualizar(String email, InscricaoAtualizacaoRequest request) {
 
         String emailNormalizado = normalizarEmail(email);
 
         Inscricao inscricao = repository.buscarPorEmail(emailNormalizado).orElseThrow(() -> new InscricaoNaoEncontradaException("Inscrição não encontrada."));
 
         String novoNome = normalizarNome(request.getNome());
-        String novoEmail = normalizarEmail(request.getEmail());
-
-        if (!Objects.equals(emailNormalizado, novoEmail)) {
-            throw new IllegalArgumentException("O e-mail da inscrição não pode ser alterado.");
-        }
 
         validarDados(
                 novoNome,
