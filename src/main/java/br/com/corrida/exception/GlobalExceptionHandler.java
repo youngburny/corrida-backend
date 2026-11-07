@@ -41,7 +41,15 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErroResponse> tratarJsonInvalido(
             HttpMessageNotReadableException exception
     ) {
-        ErroResponse erro = new ErroResponse("Corpo da requisição inválido. Verifique os campos e seus formatos.");
+
+        String mensagem = "Corpo da requisição inválido. Verifique os campos e seus formatos.";
+
+        if (exception.getMessage() != null &&
+                exception.getMessage().contains("Percurso")) {
+            mensagem = "Selecione um percurso válido.";
+        }
+
+        ErroResponse erro = new ErroResponse(mensagem);
 
         return ResponseEntity.badRequest().body(erro);
     }

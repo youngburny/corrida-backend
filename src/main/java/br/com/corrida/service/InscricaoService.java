@@ -70,13 +70,15 @@ public class InscricaoService {
         }
 
         if (nascimento == null || !nascimento.isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException(
-                    "Informe uma data de nascimento válida, anterior a hoje."
-            );
+            throw new IllegalArgumentException("Informe uma data de nascimento válida, anterior a hoje.");
         }
 
         if (percurso == null) {
             throw new IllegalArgumentException("O percurso é obrigatório.");
+        }
+
+        if (percurso != Percurso.KM_5 && percurso != Percurso.KM_10) {
+            throw new IllegalArgumentException("Selecione um percurso válido.");
         }
 
         int idade = calcularIdade(nascimento);
@@ -88,6 +90,7 @@ public class InscricaoService {
         if (percurso == Percurso.KM_10 && idade < 18) {
             throw new IllegalArgumentException("O percurso de 10 km exige idade mínima de 18 anos.");
         }
+
     }
 
     private String normalizarNome(String nome) {
